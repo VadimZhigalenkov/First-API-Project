@@ -1,5 +1,5 @@
 from utils.api import Google_maps_api
-from utils.cheking import Cheking
+from utils.checking import Cheking
 import allure
 
 """Создание, изменение и удаление новой локации"""
