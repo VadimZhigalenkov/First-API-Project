@@ -1,6 +1,6 @@
 """Методы для проверки ответов наших запросов"""
 
-class Cheking():
+class Checking():
 
     @staticmethod
     def check_status_code(result, status_code):

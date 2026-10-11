@@ -1,52 +1,134 @@
-# First API Automation Project (Google Maps API)
+# First API Automation Project --- Google Maps Training API
 
-Это мой первый проект по автоматизации тестирования REST API. 
-В проекте реализован полный цикл тестирования эндпоинтов Google Maps API: 
-создание, проверка, изменение и удаление локации.
+## About
 
-### Цель проекта:
-Написать автотест, который проверяет полный жизненный цикл создания локации в Google Maps:
-1. Создать новую локацию.
-2. Проверить, что она создалась.
-3. Изменить у неё адрес.
-4. Проверить, что адрес изменился.
-5. Удалить локацию.
-6. Проверить, что локация удалена.
+An educational Python project focused on REST API test automation. The
+test covers the lifecycle of a location in a training API: creating it,
+retrieving it, updating its address, and deleting it.
 
-## 🛠️ Используемые технологии
-*   **Python**
-*   **Pytest** 
-*   **Requests** 
-*   **Allure** 
-*   **Logging** 
+> This is the Rahul Shetty Academy training service that simulates a
+> location API, not Google's official public Google Maps API.
 
-## 🚀 Что делает этот тест?
-Тест (`test_google_maps_api.py`) выполняет полный E2E (End-to-End) сценарий:
-1.  **POST:** Создает новую локацию (place_id) и проверяет код ответа 200.
-2.  **GET:** Проверяет, что созданная локация успешно найдена по `place_id`.
-3.  **PUT:** Изменяет адрес созданной локации на "100 Lenina street, RU".
-4.  **GET:** Проверяет, что адрес действительно изменился.
-5.  **DELETE:** Удаляет локацию.
-6.  **GET:** Проверяет, что локация удалена (ожидаемый код ответа 404).
+## Tech Stack
 
-Все проверки (`status_code`, наличие полей в JSON, значения полей) вынесены в отдельный файл утилит, что делает код чистым и переиспользуемым.
+-   Python
+-   Requests --- HTTP request handling
+-   Pytest --- test organization and execution
+-   Allure Pytest --- test steps and Allure result collection
+-   Logging --- recording request and response details
 
-## 📂 Структура проекта
-*   `tests/` — папка с тестами.
-*   `utils/` — вспомогательные утилиты (методы HTTP, логирование, проверки).
-*   `logs/` — автоматически создаваемая папка для хранения текстовых логов тестов.
-*   `.gitignore` — файл для исключения служебных файлов из репозитория.
+## What Is Tested
 
-    
-### Чему я научился в этом проекте:
-* Разделять код на логические слои (методы API, проверки, HTTP-клиент).
-* Писать переиспользуемые проверки для JSON-ответов.
-* Работать с Git и загружать проект на GitHub (исключая мусорные файлы через .gitignore).
+The test in `tests/test_google_maps_api.py` runs one end-to-end
+scenario:
 
----
-*Автор: Жигаленков Вадим*
+1.  **POST** --- creates a location and retrieves its `place_id`.
+2.  **GET** --- retrieves the location by `place_id` and checks the
+    response status, JSON fields, and original address.
+3.  **PUT** --- updates the location's address.
+4.  **GET** --- verifies that the new address has been saved.
+5.  **DELETE** --- deletes the location.
+6.  **GET** --- verifies that the deleted location can no longer be
+    found (HTTP `404` is expected).
 
+## Project Structure
 
+``` text
+First-API-Project/
+├── tests/
+│   └── test_google_maps_api.py
+├── utils/
+│   ├── api.py
+│   ├── checking.py
+│   ├── http_methods.py
+│   └── logger.py
+├── logs/                 # created when logs are written
+├── pytest.ini
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
----
+-   `tests/test_google_maps_api.py` --- the test scenario and
+    expected-behavior checks.
+-   `utils/api.py` --- API methods for creating, retrieving, updating,
+    and deleting locations.
+-   `utils/http_methods.py` --- sends HTTP requests using `requests`.
+-   `utils/checking.py` --- reusable assertions for status codes, JSON
+    fields, and values.
+-   `utils/logger.py` --- records request and response information.
+-   `pytest.ini` --- Pytest configuration, including adding the project
+    root to Python's import path.
+-   `requirements.txt` --- Python dependencies.
+
+## How the Test Works
+
+The test calls a method from `Google_maps_api`. That method builds the
+URL and request data, then passes the request to `HttpMethods`. The HTTP
+client sends it through Requests and returns a Response object. The test
+extracts `place_id` from the JSON response and uses it in subsequent
+requests. After each operation, assertions from `Cheking` validate the
+result.
+
+The responsibilities are separated into the test scenario, API methods,
+HTTP client, assertions, and logging.
+
+## Installation and Usage
+
+### 1. Clone the repository
+
+``` bash
+git clone https://github.com/VadimZhigalenkov/First-API-Project.git
+cd First-API-Project
+```
+
+### 2. Create a virtual environment
+
+``` bash
+python -m venv .venv
+```
+
+Activate it in Windows PowerShell:
+
+``` powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+``` bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Run the tests
+
+``` bash
+python -m pytest
+```
+
+### 5. Collect Allure results
+
+``` bash
+python -m pytest --alluredir=allure-results
+```
+
+To view the report using `allure serve`, Allure Commandline must also be
+installed:
+
+``` bash
+allure serve allure-results
+```
+
+## Skills Practiced
+
+-   REST APIs and `GET`, `POST`, `PUT`, and `DELETE` methods.
+-   Sending requests and handling responses with Requests.
+-   Validating HTTP status codes and JSON responses.
+-   Organizing tests with Pytest.
+-   Separating code into logical modules.
+-   Logging and Allure integration.
+
+## Author
+
+Vadim Zhigalenkov --- educational project for practicing API test
+automation.
