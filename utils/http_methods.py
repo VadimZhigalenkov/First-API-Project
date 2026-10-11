@@ -8,7 +8,7 @@ from utils.logger import Logger
 
 class HttpMethods:
     headers = {'Content-Type': 'application/json'}
-    cookies = ""
+    cookies = None
 
     @staticmethod
     def get(url):
